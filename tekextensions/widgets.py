@@ -1,6 +1,7 @@
 from django import forms
-from django.template.loader import render_to_string
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.template.loader import render_to_string
+
 
 class PopUpBaseWidget(object):
     def __init__(self, model=None, template='addnew.html', *args, **kwargs):
@@ -15,13 +16,16 @@ class PopUpBaseWidget(object):
             self.model = name
 
         popupplus = render_to_string(self.template, {'field': name, 'model': self.model})
-        return html+popupplus
+        return html +popupplus
+
 
 class FilteredMultipleSelectWithPopUp(PopUpBaseWidget, FilteredSelectMultiple):
     pass
 
+
 class MultipleSelectWithPopUp(PopUpBaseWidget, forms.SelectMultiple):
     pass
+
 
 class SelectWithPopUp(PopUpBaseWidget, forms.Select):
     pass
