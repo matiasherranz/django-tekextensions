@@ -8,7 +8,7 @@ from tekextensions.forms import get_model_form, normalize_model_name
 
 
 def add_new_model(request, model_name, form=None):
-    #normal_model_name = normalize_model_name(model_name)
+
     normal_model_name = model_name
 
     if not form:
