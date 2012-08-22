@@ -1,8 +1,19 @@
 from django.conf import settings
 from django.contrib.sites.models import Site, RequestSite
 
+
 def admin_media_prefix(request):
-    return {'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX }
+    try:
+        admin_prefix = settings.STATIC_URL + "/admin/"
+    except:
+        try:
+            admin_prefix = settings.ADMIN_MEDIA_PREFIX
+    else:
+        # final guess
+        admin_prefix = "/static/admin/"
+
+    return {'ADMIN_MEDIA_PREFIX': admin_prefix}
+
 
 def current_site(request):
     '''
@@ -12,7 +23,7 @@ def current_site(request):
 
     try:
         current_site = Site.objects.get_current()
-        return { context_name: current_site, }
+        return {context_name: current_site, }
     except Site.DoesNotExist:
         # always return a dict, no matter what!
-        return { context_name: RequestSite(request)}
+        return {context_name: RequestSite(request)}
