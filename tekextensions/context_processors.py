@@ -4,13 +4,15 @@ from django.contrib.sites.models import Site, RequestSite
 
 def admin_media_prefix(request):
     try:
+        # django 1.4
         admin_prefix = settings.STATIC_URL + "/admin/"
     except:
         try:
+            # <= django 1.3
             admin_prefix = settings.ADMIN_MEDIA_PREFIX
-    else:
-        # final guess
-        admin_prefix = "/static/admin/"
+        except:
+            # final guess
+            admin_prefix = "/static/admin/"
 
     return {'ADMIN_MEDIA_PREFIX': admin_prefix}
 
